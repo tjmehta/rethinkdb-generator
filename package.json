@@ -1,0 +1,46 @@
+{
+  "name": "rethinkdb-iterator",
+  "version": "0.0.0",
+  "description": "Convert a rethinkdb cursor into an async iterable",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/jest": "^25.2.1",
+    "@types/rethinkdb": "^2.3.14",
+    "babel-jest": "^25.3.0",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "rethinkdb": "^2.4.2",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "build": "babel --config-file ./.babelrc ./index.ts > index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjmehta/rethinkdb-iterator.git"
+  },
+  "keywords": [
+    "rethinkdb",
+    "iterator",
+    "asynciterator",
+    "async-iterator",
+    "iterable",
+    "asynciterable",
+    "async-iterable",
+    "async",
+    "observable"
+  ],
+  "author": "Tejesh Mehta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tjmehta/rethinkdb-iterator/issues"
+  },
+  "homepage": "https://github.com/tjmehta/rethinkdb-iterator#readme"
+}
