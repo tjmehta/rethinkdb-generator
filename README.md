@@ -1,4 +1,4 @@
-# rethinkdb-iterable
+# rethinkdb-iterable [![Build Status](https://travis-ci.org/tjmehta/rethinkdb-iterable.svg?branch=master)](https://travis-ci.org/tjmehta/rethinkdb-iterable)
 
 Convert a rethinkdb cursor into an async iterable
 
