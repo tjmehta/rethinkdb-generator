@@ -1,5 +1,5 @@
 {
-  "name": "rethinkdb-iterator",
+  "name": "rethinkdb-iterable",
   "version": "0.0.0",
   "description": "Convert a rethinkdb cursor into an async iterable",
   "main": "index.js",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tjmehta/rethinkdb-iterator.git"
+    "url": "git+https://github.com/tjmehta/rethinkdb-iterable.git"
   },
   "keywords": [
     "rethinkdb",
@@ -40,7 +40,7 @@
   "author": "Tejesh Mehta",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tjmehta/rethinkdb-iterator/issues"
+    "url": "https://github.com/tjmehta/rethinkdb-iterable/issues"
   },
-  "homepage": "https://github.com/tjmehta/rethinkdb-iterator#readme"
+  "homepage": "https://github.com/tjmehta/rethinkdb-iterable#readme"
 }
