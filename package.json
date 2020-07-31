@@ -1,34 +1,52 @@
 {
-  "name": "node-module-template",
+  "name": "rethinkdb-generator",
   "version": "0.0.0",
-  "description": "Description",
+  "description": "Create an generator (iterable) from a rethinkdb cursor",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
-    "test": "jest --coverage"
+    "test": "DOTENV_CONFIG_PATH=.env.test node -r dotenv/config node_modules/.bin/jest --coverage"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tjmehta/node-module-template.git"
+    "url": "git+https://github.com/tjmehta/rethinkdb-generator.git"
   },
   "keywords": [
+    "rethinkdb",
+    "iterable",
+    "iterator",
+    "generator",
+    "cursor",
+    "row",
+    "rows",
+    "document",
+    "documents",
+    "query"
   ],
   "author": "Tejesh Mehta",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tjmehta/node-module-template/issues"
+    "url": "https://github.com/tjmehta/rethinkdb-generator/issues"
   },
-  "homepage": "https://github.com/tjmehta/node-module-template#readme",
+  "homepage": "https://github.com/tjmehta/rethinkdb-generator#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-typescript": "^7.10.1",
     "@types/jest": "^25.2.3",
+    "@types/rethinkdb": "^2.3.16",
     "babel-core": "^6.26.3",
     "babel-jest": "^26.0.1",
+    "dotenv": "^8.2.0",
+    "env-var": "^6.3.0",
+    "ignore-errors": "^2.0.0",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
+    "rethinkdb": "^2.4.2",
     "typescript": "^3.9.3"
+  },
+  "peerDependencies": {
+    "rethinkdb": "^2.4.2"
   }
 }
