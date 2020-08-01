@@ -1,8 +1,14 @@
 import { Cursor } from 'rethinkdb'
 
+export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
+  return(
+    value?: Return | PromiseLike<Return>,
+  ): Promise<IteratorResult<Next, Return>>
+}
+
 export default async function* rethinkdbGen<Row extends object>(
   cursor: Cursor,
-): AsyncGenerator<Row, undefined> {
+): AsyncGen<Row, undefined> {
   try {
     while (true) {
       const row = await cursor.next().catch((err) => Promise.reject(err))

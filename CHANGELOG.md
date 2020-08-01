@@ -1,3 +1,7 @@
+# v1.0.2
+
+- patch: updated generator return method arg type nullable
+
 # v1.0.1
 
 - patch: updated generator return type void -> undefined

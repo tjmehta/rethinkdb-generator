@@ -1,3 +1,4 @@
+import { AsyncGen } from './../index'
 import { get } from 'env-var'
 import { ignoreMessage } from 'ignore-errors'
 import r from 'rethinkdb'
@@ -45,7 +46,7 @@ describe('rethinkdb-generator', () => {
   })
 
   it('should get one row using generator.next', async () => {
-    let generator
+    let generator: AsyncGen<{ id: number }, undefined>
     let cursor
     try {
       cursor = await r.db('test').table('test').run(conn)
@@ -54,6 +55,8 @@ describe('rethinkdb-generator', () => {
       generator = rethinkdbGen<{ id: number }>(cursor)
       const { value: row } = await generator.next()
       expect(cursor.next).toHaveBeenCalledTimes(1)
+      await generator.return()
+      expect(cursor.close).toHaveBeenCalledTimes(1)
       expect(typeof (row && row.id)).toBe('number')
     } catch (err) {
       throw err
@@ -71,8 +74,9 @@ describe('rethinkdb-generator', () => {
       const err = new Error('boom')
       jest.spyOn(cursor, 'close')
       jest.spyOn(cursor, 'next').mockImplementation(() => Promise.reject(err))
+      cursor.id = cursor.id || 101
       generator = rethinkdbGen<{ id: number }>(cursor)
-      expect(generator.next()).rejects.toThrow(err)
+      await expect(generator.next()).rejects.toThrow(err)
       expect(cursor.close).toHaveBeenCalled()
     } catch (err) {
       throw err
