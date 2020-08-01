@@ -73,6 +73,7 @@ describe('rethinkdb-generator', () => {
       jest.spyOn(cursor, 'next').mockImplementation(() => Promise.reject(err))
       generator = rethinkdbGen<{ id: number }>(cursor)
       expect(generator.next()).rejects.toThrow(err)
+      expect(cursor.close).toHaveBeenCalled()
     } catch (err) {
       throw err
     } finally {
@@ -136,6 +137,7 @@ describe('rethinkdb-generator', () => {
           }
         })(),
       ).rejects.toThrow(err)
+      expect(cursor.close).toHaveBeenCalled()
     } catch (err) {
       throw err
     } finally {

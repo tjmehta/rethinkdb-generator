@@ -2,7 +2,7 @@ import { Cursor } from 'rethinkdb'
 
 export default async function* rethinkdbGen<Row extends object>(
   cursor: Cursor,
-): AsyncGenerator<Row, void> {
+): AsyncGenerator<Row, undefined> {
   try {
     while (true) {
       const row = await cursor.next().catch((err) => Promise.reject(err))
