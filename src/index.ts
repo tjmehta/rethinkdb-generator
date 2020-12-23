@@ -1,4 +1,5 @@
 import { Cursor } from 'rethinkdb'
+import abortable from 'abortable-generator'
 
 export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
   return(
@@ -6,21 +7,26 @@ export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
   ): Promise<IteratorResult<Next, Return>>
 }
 
-export default async function* rethinkdbGen<Row extends object>(
+export default function rethinkdbGen<Row extends object>(
   cursor: Cursor,
 ): AsyncGen<Row, undefined> {
-  try {
-    while (true) {
-      const row = await cursor.next().catch((err) => Promise.reject(err))
-      yield row
-    }
-  } catch (err) {
-    if (/no more rows/i.test(err.message)) return
-    throw err
-  } finally {
+  const rows = abortable<Row>(async function* (raceAbort) {
     try {
-      await cursor.close()
+      while (true) {
+        // reject is necessary or rethinkdb results in unhandled rejection
+        yield raceAbort(cursor.next().catch((err) => Promise.reject(err)))
+      }
+    } catch (err) {
+      if (err.name === 'AbortError') return
+      if (/no more rows/i.test(err.message)) return
+      throw err
     } finally {
+      try {
+        await cursor.close()
+      } finally {
+      }
     }
-  }
+  })
+
+  return rows()
 }

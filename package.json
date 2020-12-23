@@ -48,5 +48,9 @@
   },
   "peerDependencies": {
     "rethinkdb": "^2.4.2"
+  },
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "abortable-generator": "^1.2.1"
   }
 }
