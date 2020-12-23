@@ -1,3 +1,7 @@
+# v1.1.0
+
+- minor: add abortable-generator in case cursor next is deferred promise (possible with changes queries)
+
 # v1.0.2
 
 - patch: updated generator return method arg type nullable
