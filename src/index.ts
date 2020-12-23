@@ -9,6 +9,7 @@ export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
 
 export default function rethinkdbGen<Row extends object>(
   cursor: Cursor,
+  signal?: AbortSignal,
 ): AsyncGen<Row, undefined> {
   const rows = abortable<Row>(async function* (raceAbort) {
     try {
@@ -28,5 +29,5 @@ export default function rethinkdbGen<Row extends object>(
     }
   })
 
-  return rows()
+  return rows(signal)
 }
