@@ -1,5 +1,6 @@
+import abortable, { AsyncIterableIteratorWithDone } from 'abortable-generator'
+
 import { Cursor } from 'rethinkdb'
-import abortable from 'abortable-generator'
 
 export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
   return(
@@ -10,7 +11,7 @@ export interface AsyncGen<Next, Return> extends AsyncGenerator<Next, Return> {
 export default function rethinkdbGen<Row extends object>(
   cursor: Cursor,
   signal?: AbortSignal,
-): AsyncGen<Row, undefined> {
+): AsyncIterableIteratorWithDone<Row> {
   const rows = abortable<Row>(async function* (raceAbort) {
     try {
       while (true) {
