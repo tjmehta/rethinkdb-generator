@@ -1,6 +1,6 @@
 {
   "name": "rethinkdb-generator",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Create an generator (iterable) from a rethinkdb cursor",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
