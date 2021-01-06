@@ -30,5 +30,12 @@ export default function rethinkdbGen<Row extends object>(
     }
   })
 
-  return rows(signal)
+  const iterable = rows(signal)
+
+  if (signal?.aborted) {
+    cursor.close()
+    iterable.return()
+  }
+
+  return iterable
 }

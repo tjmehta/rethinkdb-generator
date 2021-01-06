@@ -1,3 +1,4 @@
+import AbortController from 'abort-controller'
 import { AsyncGen } from './../index'
 import { get } from 'env-var'
 import { ignoreMessage } from 'ignore-errors'
@@ -147,6 +148,35 @@ describe('rethinkdb-generator', () => {
     } finally {
       await generator?.return()
       expect(cursor.close).toHaveBeenCalled()
+    }
+  })
+
+  it('should close cursor if signal is aborted', async () => {
+    let generator
+    let cursor
+    try {
+      cursor = await r.db('test').table('test').run(conn)
+      const err = new Error('boom')
+      jest.spyOn(cursor, 'close')
+      jest.spyOn(cursor, 'next').mockImplementation(() => Promise.reject(err))
+      const controller = new AbortController()
+      const signal = controller.signal
+      controller.abort()
+      generator = rethinkdbGen<{ id: number }>(cursor, signal)
+      await expect(
+        (async () => {
+          const rows = []
+          for await (let row of generator) {
+            rows.push(row.id)
+          }
+        })(),
+      ).resolves.toBeUndefined()
+    } catch (err) {
+      throw err
+    } finally {
+      expect(cursor.close).toHaveBeenCalled()
+      await generator?.return()
+      expect(cursor.close).toHaveBeenCalledTimes(1)
     }
   })
 })
