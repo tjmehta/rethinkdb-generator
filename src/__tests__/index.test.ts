@@ -47,7 +47,7 @@ describe('rethinkdb-generator', () => {
   })
 
   it('should get one row using generator.next', async () => {
-    let generator: AsyncGen<{ id: number }, undefined>
+    let generator: AsyncIterableIterator<{ id: number }, undefined>
     let cursor
     try {
       cursor = await r.db('test').table('test').run(conn)
@@ -91,7 +91,7 @@ describe('rethinkdb-generator', () => {
     const cursor = await r.db('test').table('test').run(conn)
     jest.spyOn(cursor, 'close')
     const generator = rethinkdbGen<{ id: number }>(cursor)
-    const rows = []
+    const rows: Array<number> = []
     for await (let row of generator) {
       rows.push(row.id)
     }
